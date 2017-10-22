@@ -8,6 +8,7 @@
 
 #import "TableViewController.h"
 #import "TableViewCell.h"
+#import "DetailViewController.h"
 
 @interface TableViewController () {
     NSArray* table;
@@ -19,6 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"A-Teams";
     
     table = [NSArray arrayWithObjects: @"Posts", @"Comments", @"Users", @"Photo", @"Todos", nil];
     // Uncomment the following line to preserve selection between presentations.
@@ -56,6 +59,13 @@
     return cell;
 }
 
+//Меняем высоту ячейки
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 75.0f;
+}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -91,14 +101,20 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString: @"showDetail"])
+    {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DetailViewController *destViewController = segue.destinationViewController;
+        destViewController.title = table [indexPath.row];
+        destViewController.buffer = indexPath.row;
+        destViewController.tmp = table [indexPath.row];
+    }
 }
-*/
+
 
 @end
