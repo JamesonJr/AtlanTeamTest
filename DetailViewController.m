@@ -9,7 +9,10 @@
 #import "DetailViewController.h"
 #import <AFNetworking/AFNetworking.h>
 
-@interface DetailViewController ()
+@interface DetailViewController () {
+    NSArray* tableCellTitle;
+    NSArray* responseJSON;
+}
 
 @end
 
@@ -20,11 +23,11 @@
 @synthesize button;
 @synthesize image;
 @synthesize buffer;
-@synthesize tmp;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadData: tmp];
+    //tableCellTitle = [NSArray arrayWithObjects: @"posts", @"comments", @"users", @"photo", @"todos", nil];
+    [self loadDataNew];
     //Делаем невидимыми все объекты, будем включать видимость при необходимости
     /*[label1 setHidden:YES];
     [label2 setHidden:YES];
@@ -36,6 +39,15 @@
     [image setHidden:YES];*/
     [button setTitle:@"Accept" forState:UIControlStateNormal];
     if (buffer == 0) {
+        /*AFHTTPSessionManager* manager = [AFHTTPSessionManager manager];
+        [manager GET: (@"https://jsonplaceholder.typicode.com/posts/") parameters: nil success: ^(NSURLSessionTask* operation, id responseObject) {
+            responseJSON = responseObject;
+            //NSLog(@"%@", responseJSON);
+        }failure: ^(NSURLSessionTask* operation, NSError* error) {
+            NSLog(@"%@", error);
+        }];
+        NSDictionary* responseObjectData = responseJSON [0];
+        label1.text = [responseObjectData valueForKey: @"id"];*/
         [label5 setHidden:YES];
         [image setHidden:YES];
     }
@@ -62,15 +74,26 @@
         [button setHidden:YES];
         [image setHidden:YES];
     }
+    NSLog(@"%@", responseJSON);
 }
-
-- (void) loadData: (NSString*) cellName {
+//Выдает ошибку unsupported URL что-то со стрингами, после оптимизировать
+- (void) loadData {
     AFHTTPSessionManager* manager = [AFHTTPSessionManager manager];
-    [manager GET: (@"https://jsonplaceholder.typicode.com/", cellName) parameters: nil success: ^(NSURLSessionTask* operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    [manager GET: (@"https://jsonplaceholder.typicode.com/posts/") parameters: nil success: ^(NSURLSessionTask* operation, id responseObject) {
     }failure: ^(NSURLSessionTask* operation, NSError* error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (void) loadDataNew {
+    AFHTTPSessionManager* manager = [AFHTTPSessionManager manager];
+    [manager GET: (@"https://jsonplaceholder.typicode.com/posts/") parameters: nil progress: nil success: ^(NSURLSessionTask* operation, id responseObject) {
+        responseJSON = responseObject;
+        NSLog(@"aaaa");
+    } failure: ^(NSURLSessionTask* operation, NSError* error) {
+        NSLog(@"%@", error);
+    }];
+    NSLog(@"%@", responseJSON);
 }
 
 - (void)didReceiveMemoryWarning {

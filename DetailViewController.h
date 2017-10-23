@@ -20,5 +20,4 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 
 @property (assign) NSInteger buffer;
-@property (assign) NSString *tmp;
 @end

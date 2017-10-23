@@ -112,7 +112,6 @@
         DetailViewController *destViewController = segue.destinationViewController;
         destViewController.title = table [indexPath.row];
         destViewController.buffer = indexPath.row;
-        destViewController.tmp = table [indexPath.row];
     }
 }
 
