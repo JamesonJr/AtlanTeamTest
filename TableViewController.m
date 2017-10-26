@@ -59,7 +59,6 @@
     return cell;
 }
 
-//Меняем высоту ячейки
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     

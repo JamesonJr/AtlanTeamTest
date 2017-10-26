@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (weak, nonatomic) IBOutlet UITextView *text1;
+@property (weak, nonatomic) IBOutlet UITextView *text2;
 
 @property (assign) NSInteger buffer;
 @end
