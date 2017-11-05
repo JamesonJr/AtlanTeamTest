@@ -12,6 +12,8 @@
 @interface DetailViewController () {
     NSArray* tableCellTitle;
     NSArray* responseJSON;
+    NSInteger intForPosts;
+    NSInteger intForComments;
 }
 
 @end
@@ -30,6 +32,8 @@
     tableCellTitle = [NSArray arrayWithObjects: @"posts", @"comments", @"users", @"photos", @"todos", nil];
     [self loadDataNew: tableCellTitle [buffer]];
     [button setTitle: @"Accept" forState:UIControlStateNormal];
+    intForPosts = 99;
+    intForComments = 499;
 }
 
 - (void) loadDataNew: (NSString *) cellName{
@@ -46,7 +50,7 @@
 
 - (void) showData: (NSArray *) inputData {
     if (buffer == 0) {
-        NSDictionary* responseObjectData = inputData [99];
+        NSDictionary* responseObjectData = inputData [intForPosts];
         NSNumber* jsonId = [responseObjectData valueForKey: @"id"];
         NSNumber* userId = [responseObjectData valueForKey: @"userId"];
         NSString* formatTitle = [responseObjectData valueForKey: @"title"];
@@ -62,7 +66,7 @@
         [image setHidden: YES];
     }
     if (buffer == 1) {
-        NSDictionary* responseObjectData = inputData [499];
+        NSDictionary* responseObjectData = inputData [intForComments];
         NSNumber* jsonId = [responseObjectData valueForKey: @"id"];
         NSNumber* postId = [responseObjectData valueForKey: @"postId"];
         NSString* formatName = [responseObjectData valueForKey: @"name"];
@@ -150,9 +154,50 @@
 
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UIView* view in self.view.subviews)
+        [view resignFirstResponder];
+}
+
+- (IBAction) changeJSONData: (id) sender {
+    NSString* dataFromTextField = textField.text;
+    NSInteger intDataFromTextField = [dataFromTextField integerValue];
+    if (buffer == 0) {
+        if (intDataFromTextField > 100) {
+            [label1 setHidden:YES];
+            [label2 setHidden:YES];
+            [label3 setHidden:YES];
+            [label4 setHidden:YES];
+            [label5 setHidden:YES];
+            [text1 setHidden: YES];
+            [image setHighlighted: YES];
+            text2.text = @"Enter correct data";
+        }
+        else {
+            intForPosts = intDataFromTextField-1;
+            [self loadDataNew: tableCellTitle [buffer]];
+        }
+    }
+    if (buffer == 1) {
+        if (intDataFromTextField > 500) {
+            [label1 setHidden:YES];
+            [label2 setHidden:YES];
+            [label3 setHidden:YES];
+            [label4 setHidden:YES];
+            [label5 setHidden:YES];
+            [text1 setHidden: YES];
+            [image setHighlighted: YES];
+            text2.text = @"Enter correct data";
+        }
+    }
+    else {
+        intForComments = intDataFromTextField-1;
+        [self loadDataNew: tableCellTitle [buffer]];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
 @end

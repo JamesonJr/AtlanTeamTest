@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UITextView *text1;
 @property (weak, nonatomic) IBOutlet UITextView *text2;
+- (IBAction) changeJSONData: (id) sender;
 
 @property (assign) NSInteger buffer;
 @end
